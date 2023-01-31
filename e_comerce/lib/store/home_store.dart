@@ -18,6 +18,9 @@ abstract class HomeStoreBase with Store {
   @observable
   List<Produto2> p2 = [];
 
+  @observable
+  bool listaCarregada = false;
+
   // @observable
   // List<ProdutoGeral> produtos = [];
 
@@ -62,5 +65,8 @@ abstract class HomeStoreBase with Store {
       pro.categoria = produto.details!.material!;
       produtos.add(pro);
     });
+
+    listaCarregada = true;
+    print(listaCarregada);
   }
 }

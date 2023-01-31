@@ -71,6 +71,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  late final _$listaCarregadaAtom =
+      Atom(name: 'HomeStoreBase.listaCarregada', context: context);
+
+  @override
+  bool get listaCarregada {
+    _$listaCarregadaAtom.reportRead();
+    return super.listaCarregada;
+  }
+
+  @override
+  set listaCarregada(bool value) {
+    _$listaCarregadaAtom.reportWrite(value, super.listaCarregada, () {
+      super.listaCarregada = value;
+    });
+  }
+
   late final _$HomeStoreBaseActionController =
       ActionController(name: 'HomeStoreBase', context: context);
 
@@ -135,7 +151,8 @@ mixin _$HomeStore on HomeStoreBase, Store {
 categoria: ${categoria},
 inputPesquisa: ${inputPesquisa},
 p1: ${p1},
-p2: ${p2}
+p2: ${p2},
+listaCarregada: ${listaCarregada}
     ''';
   }
 }
