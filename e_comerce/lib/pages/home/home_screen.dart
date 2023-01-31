@@ -85,15 +85,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 vertical: MediaQuery.of(context).size.height / 50),
             child: Row(
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width / 25),
-                    child: CustomInput(
-                      hint: "Pesquisar Produto",
+                Observer(builder: (_) {
+                  return Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width / 25),
+                      child: CustomInput(
+                        hint: "Pesquisar Produto",
+                        onChange: store.setInputPesquisa,
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
                 Observer(builder: (_) {
                   return Padding(
                     padding: EdgeInsets.only(
@@ -169,27 +172,27 @@ class _HomeScreenState extends State<HomeScreen> {
           if (store.listaCarregada) {
             return Expanded(
               child: ListView.builder(
-                itemCount: store.categoria == ""
+                itemCount: !store.isFiltrar
                     ? store.produtos.length
                     : store.produtosFitrados.length,
                 itemBuilder: ((context, index) {
                   return ContainerProdutos(
-                    urlImg: store.categoria != ""
+                    urlImg: store.isFiltrar
                         ? store.produtosFitrados[index].imagem!
                         : store.produtos[index].imagem!,
                     add: () {
                       print("add");
                     },
-                    descricao: store.categoria != ""
+                    descricao: store.isFiltrar
                         ? store.produtosFitrados[index].descricao!
                         : store.produtos[index].descricao!,
-                    nome: store.categoria != ""
+                    nome: store.isFiltrar
                         ? store.produtosFitrados[index].nome!
                         : store.produtos[index].nome!,
-                    preco: store.categoria != ""
+                    preco: store.isFiltrar
                         ? store.produtosFitrados[index].preco!
                         : store.produtos[index].preco!,
-                    categoria: store.categoria != ""
+                    categoria: store.isFiltrar
                         ? store.produtosFitrados[index].categoria!
                         : store.produtos[index].categoria!,
                   );

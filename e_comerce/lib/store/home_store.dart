@@ -39,7 +39,20 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void setInputPesquisa(String value) => inputPesquisa = value;
+  void setInputPesquisa(String value) {
+    RegExp exp = new RegExp(
+      value,
+      caseSensitive: false,
+    );
+
+    produtosFitrados.clear();
+    inputPesquisa = value;
+    produtos.forEach((produto) {
+      if (exp.hasMatch(produto.nome!)) {
+        produtosFitrados.add(produto);
+      }
+    });
+  }
 
   @action
   void setP1(List<Produto1> lst) {
@@ -94,4 +107,7 @@ abstract class HomeStoreBase with Store {
     getCategorias();
     listaCarregada = true;
   }
+
+  @computed
+  bool get isFiltrar => inputPesquisa != "" || categoria != "";
 }
