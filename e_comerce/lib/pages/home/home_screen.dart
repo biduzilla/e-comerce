@@ -1,5 +1,6 @@
 import 'package:e_comerce/models/produto_1.dart';
 import 'package:e_comerce/models/produto_2.dart';
+import 'package:e_comerce/pages/home/widgets/container_produtos.dart';
 import 'package:e_comerce/service/http_request.dart';
 import 'package:e_comerce/store/home_store.dart';
 import 'package:e_comerce/widgets/custom_input.dart';
@@ -142,12 +143,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        // Container(
-        //   color: Colors.green,
-        //   child: Expanded(
-        //     child: Container(),
-        //   ),
-        // )
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 10,
+        ),
+        Expanded(
+            child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: ((context, index) {
+                  return ContainerProdutos(
+                    urlImg: "http://placeimg.com/640/480/cats",
+                    add: () {
+                      print("add");
+                    },
+                    descricao:
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                    nome: 'Nome Produto',
+                    preco: "100,00",
+                  );
+                })))
       ]),
     );
   }
