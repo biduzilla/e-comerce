@@ -1,4 +1,5 @@
 class ProdutoGeral {
+  int? id;
   String? nome;
   String? descricao;
   String? imagem;
@@ -6,6 +7,7 @@ class ProdutoGeral {
   String? categoria;
 
   ProdutoGeral({
+    this.id,
     this.nome,
     this.descricao,
     this.imagem,

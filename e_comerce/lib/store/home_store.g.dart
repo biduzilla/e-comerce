@@ -135,6 +135,28 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void searchCat(String value) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.searchCat');
+    try {
+      return super.searchCat(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void getCategorias() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getCategorias');
+    try {
+      return super.getCategorias();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void popularProdutos() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.popularProdutos');

@@ -21,9 +21,6 @@ abstract class HomeStoreBase with Store {
   @observable
   bool listaCarregada = false;
 
-  // @observable
-  // List<ProdutoGeral> produtos = [];
-
   ObservableList<ProdutoGeral> produtos = ObservableList();
 
   ObservableList<String> categorias = ObservableList();
@@ -45,6 +42,23 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
+  void searchCat(String value) => print(categorias.contains(value));
+
+  @action
+  void getCategorias() {
+    List<String> lst = [];
+    produtos.forEach((produto) {
+      if (!lst.contains(produto.categoria!)) {
+        lst.add(produto.categoria!);
+      }
+    });
+
+    lst = lst.toSet().toList();
+    categorias.addAll(lst);
+    print(categorias);
+  }
+
+  @action
   void popularProdutos() {
     p1.forEach((produto) {
       ProdutoGeral pro = ProdutoGeral();
@@ -52,7 +66,7 @@ abstract class HomeStoreBase with Store {
       pro.descricao = produto.descricao;
       pro.imagem = produto.imagem;
       pro.preco = produto.preco;
-      pro.categoria = produto.categoria;
+      pro.categoria = produto.departamento;
       produtos.add(pro);
     });
 
@@ -65,8 +79,7 @@ abstract class HomeStoreBase with Store {
       pro.categoria = produto.details!.material!;
       produtos.add(pro);
     });
-
+    getCategorias();
     listaCarregada = true;
-    print(listaCarregada);
   }
 }

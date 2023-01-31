@@ -72,9 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 label: Text(
                   "Login",
-                  style: TextStyle(
-                    color: Color(0xffEDF2F4),
-                  ),
+                  style: TextStyle(color: Color(0xffEDF2F4), fontSize: 20),
                 ))
           ],
         ),
@@ -96,50 +94,53 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 25),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xffEDF2F4),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    width: MediaQuery.of(context).size.width / 8,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DropdownButton(
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: Color(0xff2B2D42),
-                          ),
-                          underline: SizedBox(),
-                          iconSize: 42,
-                          isExpanded: true,
-                          hint: Text(
-                            "Categorias",
-                            style: TextStyle(
+                Observer(builder: (_) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width / 25),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xffEDF2F4),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      width: MediaQuery.of(context).size.width / 8,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DropdownButton(
+                            icon: Icon(
+                              Icons.arrow_drop_down,
                               color: Color(0xff2B2D42),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
                             ),
-                          ),
-                          items: lst.map((String dropDownStringItem) {
-                            return DropdownMenuItem<String>(
-                              child: Text(
-                                dropDownStringItem,
-                                style: TextStyle(
-                                    color: Color(0xff2B2D42),
-                                    fontWeight: FontWeight.bold),
+                            underline: SizedBox(),
+                            iconSize: 42,
+                            isExpanded: true,
+                            hint: Text(
+                              "Categorias",
+                              style: TextStyle(
+                                color: Color(0xff2B2D42),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
-                              value: dropDownStringItem,
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            print(value);
-                            dropdownCallback(value);
-                          }),
+                            ),
+                            items: store.categorias
+                                .map((String dropDownStringItem) {
+                              return DropdownMenuItem<String>(
+                                child: Text(
+                                  dropDownStringItem,
+                                  style: TextStyle(
+                                      color: Color(0xff2B2D42),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                value: dropDownStringItem,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              print(value);
+                              dropdownCallback(value);
+                            }),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                })
               ],
             ),
           ),
