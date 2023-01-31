@@ -1,3 +1,7 @@
+import 'package:e_comerce/models/produto_1.dart';
+import 'package:e_comerce/models/produto_2.dart';
+import 'package:e_comerce/service/http_request.dart';
+import 'package:e_comerce/store/home_store.dart';
 import 'package:e_comerce/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -13,6 +17,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<String> lst = ["Amora", "Cadeira", "Cachorro", "Atriz"];
   String? hint = null;
+
+  HomeStore store = HomeStore();
+  List<Produto1> p1 = [];
+  List<Produto2> p2 = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    getListProdutos();
+  }
+
+  void getListProdutos() async {
+    p1 = await HttpRequest.getProdutos1();
+    p2 = await HttpRequest.getProdutos2();
+    store.setP1(p1);
+    store.setP2(p2);
+    store.popularProdutos();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +142,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        // Container(
+        //   color: Colors.green,
+        //   child: Expanded(
+        //     child: Container(),
+        //   ),
+        // )
       ]),
     );
   }
