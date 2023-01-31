@@ -23,10 +23,20 @@ abstract class HomeStoreBase with Store {
 
   ObservableList<ProdutoGeral> produtos = ObservableList();
 
+  ObservableList<ProdutoGeral> produtosFitrados = ObservableList();
+
   ObservableList<String> categorias = ObservableList();
 
   @action
-  void setCategoria(String value) => categoria = value;
+  void setCategoria(String value) {
+    produtosFitrados.clear();
+    categoria = value;
+    produtos.forEach((produto) {
+      if (produto.categoria == value) {
+        produtosFitrados.add(produto);
+      }
+    });
+  }
 
   @action
   void setInputPesquisa(String value) => inputPesquisa = value;
@@ -67,6 +77,7 @@ abstract class HomeStoreBase with Store {
       pro.imagem = produto.imagem;
       pro.preco = produto.preco;
       pro.categoria = produto.departamento;
+      pro.id = produtos.length;
       produtos.add(pro);
     });
 
@@ -77,6 +88,7 @@ abstract class HomeStoreBase with Store {
       pro.imagem = produto.gallery![0];
       pro.preco = produto.price;
       pro.categoria = produto.details!.material!;
+      pro.id = produtos.length;
       produtos.add(pro);
     });
     getCategorias();

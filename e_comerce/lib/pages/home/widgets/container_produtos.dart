@@ -9,12 +9,14 @@ class ContainerProdutos extends StatelessWidget {
       required this.nome,
       required this.descricao,
       required this.preco,
-      required this.add});
+      required this.add,
+      required this.categoria});
 
   final String urlImg;
   final String nome;
   final String descricao;
   final String preco;
+  final String categoria;
   final Function add;
 
   @override
@@ -59,6 +61,13 @@ class ContainerProdutos extends StatelessWidget {
                   Text(
                     descricao,
                     style: TextStyle(color: Color(0xffEDF2F4), fontSize: 16),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 60,
+                  ),
+                  Text(
+                    categoria,
+                    style: TextStyle(color: Colors.amber, fontSize: 14),
                   ),
                 ],
               ),

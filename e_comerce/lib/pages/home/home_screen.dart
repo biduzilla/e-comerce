@@ -96,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Observer(builder: (_) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width / 25),
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 25),
                     child: Container(
                       decoration: BoxDecoration(
                           color: Color(0xffEDF2F4),
@@ -113,14 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             underline: SizedBox(),
                             iconSize: 42,
                             isExpanded: true,
-                            hint: Text(
-                              "Categorias",
-                              style: TextStyle(
-                                color: Color(0xff2B2D42),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
+                            hint: store.categoria == ""
+                                ? Text(
+                                    "Categorias",
+                                    style: TextStyle(
+                                      color: Color(0xff2B2D42),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  )
+                                : Text(store.categoria),
                             items: store.categorias
                                 .map((String dropDownStringItem) {
                               return DropdownMenuItem<String>(
@@ -134,13 +136,28 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             }).toList(),
                             onChanged: (value) {
-                              print(value);
-                              dropdownCallback(value);
+                              store.setCategoria(value!);
+                              // print(value);
+                              // dropdownCallback(value);
                             }),
                       ),
                     ),
                   );
-                })
+                }),
+                Observer(builder: (_) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width / 25),
+                    child: IconButton(
+                        onPressed: (() {
+                          store.setCategoria("");
+                        }),
+                        icon: Icon(
+                          Icons.clear_rounded,
+                          color: Color(0xffEDF2F4),
+                        )),
+                  );
+                }),
               ],
             ),
           ),
@@ -152,16 +169,29 @@ class _HomeScreenState extends State<HomeScreen> {
           if (store.listaCarregada) {
             return Expanded(
               child: ListView.builder(
-                itemCount: store.produtos.length,
+                itemCount: store.categoria == ""
+                    ? store.produtos.length
+                    : store.produtosFitrados.length,
                 itemBuilder: ((context, index) {
                   return ContainerProdutos(
-                    urlImg: store.produtos[index].imagem!,
+                    urlImg: store.categoria != ""
+                        ? store.produtosFitrados[index].imagem!
+                        : store.produtos[index].imagem!,
                     add: () {
                       print("add");
                     },
-                    descricao: store.produtos[index].descricao!,
-                    nome: store.produtos[index].nome!,
-                    preco: store.produtos[index].preco!,
+                    descricao: store.categoria != ""
+                        ? store.produtosFitrados[index].descricao!
+                        : store.produtos[index].descricao!,
+                    nome: store.categoria != ""
+                        ? store.produtosFitrados[index].nome!
+                        : store.produtos[index].nome!,
+                    preco: store.categoria != ""
+                        ? store.produtosFitrados[index].preco!
+                        : store.produtos[index].preco!,
+                    categoria: store.categoria != ""
+                        ? store.produtosFitrados[index].categoria!
+                        : store.produtos[index].categoria!,
                   );
                 }),
               ),
