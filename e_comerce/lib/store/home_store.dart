@@ -32,6 +32,8 @@ abstract class HomeStoreBase with Store {
 
   ObservableList<String> categorias = ObservableList();
 
+  int i = 0;
+
   @action
   void addOrRemoveCarrinho(ProdutoGeral produto) {
     if (produto.isAdd) {
@@ -40,19 +42,26 @@ abstract class HomeStoreBase with Store {
       produtosCarrinho.remove(produto);
     }
 
-    if (isFiltrar) {
-      produtosFitrados.forEach((element) {
-        if (element.id == produto.id) {
-          element.isAdd = !element.isAdd;
-        }
-      });
-    } else {
-      produtos.forEach((element) {
-        if (element.id == produto.id) {
-          element.isAdd = !element.isAdd;
-        }
-      });
-    }
+    // if (isFiltrar) {
+    //   produtosFitrados.forEach((element) {
+    //     if (element.id == produto.id) {
+    //       element.isAdd = !element.isAdd;
+    //     }
+    //   });
+    // } else {
+    //   produtos.forEach((element) {
+    //     if (element.id == produto.id) {
+    //       element.isAdd = !element.isAdd;
+    //     }
+    //   });
+    // }
+    print(produtosCarrinho.length);
+  }
+
+  @action
+  void plus() {
+    i++;
+    print(i);
   }
 
   @action

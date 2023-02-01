@@ -14,6 +14,14 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   HomeStore store = new HomeStore();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(store.produtosCarrinho.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,19 +51,19 @@ class _CartScreenState extends State<CartScreen> {
           )),
       body: Column(
         children: [
-          Observer(builder: (_) {
-            return Expanded(
-              child: Observer(builder: (_) {
-                return ListView.builder(
-                  itemCount: store.produtosCarrinho.length,
-                  itemBuilder: ((context, index) {
-                    return ContainerProdutos(
-                        produtoGeral: store.produtosCarrinho[index]);
-                  }),
-                );
-              }),
-            );
-          }),
+          Expanded(
+            child: Observer(builder: (_) {
+              return ListView.builder(
+                itemCount: store.produtosCarrinho.length,
+                itemBuilder: ((context, index) {
+                  return ContainerProdutos(
+                    produtoGeral: store.produtosCarrinho[index],
+                    addOrRemove: (ProdutoGeral) {},
+                  );
+                }),
+              );
+            }),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.width / 40,

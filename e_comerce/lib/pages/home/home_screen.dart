@@ -217,6 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       produtoGeral: store.isFiltrar
                           ? store.produtosFitrados[index]
                           : store.produtos[index],
+                      addOrRemove: store.addOrRemoveCarrinho,
                     );
                   }),
                 );

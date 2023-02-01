@@ -6,20 +6,26 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ContainerProdutos extends StatefulWidget {
-  const ContainerProdutos({super.key, required this.produtoGeral});
+  const ContainerProdutos({
+    super.key,
+    required this.produtoGeral,
+    required this.addOrRemove,
+  });
 
+  final Function(ProdutoGeral) addOrRemove;
   final ProdutoGeral produtoGeral;
   @override
   State<ContainerProdutos> createState() =>
-      _ContainerProdutosState(produtoGeral);
+      _ContainerProdutosState(produtoGeral, addOrRemove);
 }
 
 class _ContainerProdutosState extends State<ContainerProdutos> {
   final ProdutoGeral produtoGeral;
 
-  _ContainerProdutosState(this.produtoGeral);
+  _ContainerProdutosState(this.produtoGeral, this.addOrRemove);
 
   HomeStore store = HomeStore();
+  final Function(ProdutoGeral) addOrRemove;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -114,8 +120,9 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
                     onPressed: () {
                       setState(() {
                         produtoGeral.isAdd = !produtoGeral.isAdd;
-                        // store.addCarrinho(produtoGeral);
                       });
+                      addOrRemove(produtoGeral);
+                      // store.addOrRemoveCarrinho(produtoGeral);
                     },
                     icon: !produtoGeral.isAdd
                         ? Icon(Icons.add_shopping_cart)
