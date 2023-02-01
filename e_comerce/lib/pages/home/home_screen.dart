@@ -1,5 +1,6 @@
 import 'package:e_comerce/models/produto_1.dart';
 import 'package:e_comerce/models/produto_2.dart';
+import 'package:e_comerce/pages/cart/cart_screen.dart';
 import 'package:e_comerce/pages/home/widgets/container_produtos.dart';
 import 'package:e_comerce/service/http_request.dart';
 import 'package:e_comerce/store/home_store.dart';
@@ -59,18 +60,56 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Spacer(),
-            TextButton.icon(
-                onPressed: () {
-                  print("teeste");
-                },
-                icon: Icon(
-                  Icons.login,
-                  color: Color(0xffEDF2F4),
-                ),
-                label: Text(
-                  "Login",
-                  style: TextStyle(color: Color(0xffEDF2F4), fontSize: 20),
-                ))
+            Observer(builder: (_) {
+              if (store.isLogged) {
+                return TextButton.icon(
+                    onPressed: () {
+                      print("teeste");
+                    },
+                    icon: Icon(
+                      Icons.login,
+                      color: Color(0xffEDF2F4),
+                    ),
+                    label: Text(
+                      "Login",
+                      style: TextStyle(color: Color(0xffEDF2F4), fontSize: 20),
+                    ));
+              } else {
+                return TextButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  CartScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(1.0, 0.0);
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.shopping_cart,
+                      color: Color(0xffEDF2F4),
+                    ),
+                    label: Text(
+                      "Meu Carrinho",
+                      style: TextStyle(color: Color(0xffEDF2F4), fontSize: 20),
+                    ));
+              }
+            })
           ],
         ),
       ),

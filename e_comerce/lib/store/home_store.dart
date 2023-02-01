@@ -19,6 +19,9 @@ abstract class HomeStoreBase with Store {
   List<Produto2> p2 = [];
 
   @observable
+  bool isLogged = false;
+
+  @observable
   bool listaCarregada = false;
 
   ObservableList<ProdutoGeral> produtos = ObservableList();

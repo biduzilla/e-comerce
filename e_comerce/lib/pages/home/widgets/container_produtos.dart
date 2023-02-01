@@ -117,7 +117,9 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
                         // store.addCarrinho(produtoGeral);
                       });
                     },
-                    icon: Icon(Icons.add_shopping_cart),
+                    icon: !produtoGeral.isAdd
+                        ? Icon(Icons.add_shopping_cart)
+                        : Icon(Icons.remove_shopping_cart),
                     label: Padding(
                         padding: EdgeInsets.all(
                             MediaQuery.of(context).size.height / 80),

@@ -1,3 +1,4 @@
+import 'package:e_comerce/pages/cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home/home_screen.dart';
