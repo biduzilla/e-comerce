@@ -1,3 +1,5 @@
+import 'package:e_comerce/store/home_store.dart';
+
 class ProdutoGeral {
   int? id;
   String? nome;
@@ -5,6 +7,7 @@ class ProdutoGeral {
   String? imagem;
   String? preco;
   String? categoria;
+  bool isAdd = false;
 
   ProdutoGeral({
     this.id,

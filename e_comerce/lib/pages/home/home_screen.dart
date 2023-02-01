@@ -17,9 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> lst = ["Amora", "Cadeira", "Cachorro", "Atriz"];
-  String? hint = null;
-
   HomeStore store = HomeStore();
   List<Produto1> p1 = [];
   List<Produto2> p2 = [];
@@ -171,33 +168,20 @@ class _HomeScreenState extends State<HomeScreen> {
         Observer(builder: (_) {
           if (store.listaCarregada) {
             return Expanded(
-              child: ListView.builder(
-                itemCount: !store.isFiltrar
-                    ? store.produtos.length
-                    : store.produtosFitrados.length,
-                itemBuilder: ((context, index) {
-                  return ContainerProdutos(
-                    urlImg: store.isFiltrar
-                        ? store.produtosFitrados[index].imagem!
-                        : store.produtos[index].imagem!,
-                    add: () {
-                      print("add");
-                    },
-                    descricao: store.isFiltrar
-                        ? store.produtosFitrados[index].descricao!
-                        : store.produtos[index].descricao!,
-                    nome: store.isFiltrar
-                        ? store.produtosFitrados[index].nome!
-                        : store.produtos[index].nome!,
-                    preco: store.isFiltrar
-                        ? store.produtosFitrados[index].preco!
-                        : store.produtos[index].preco!,
-                    categoria: store.isFiltrar
-                        ? store.produtosFitrados[index].categoria!
-                        : store.produtos[index].categoria!,
-                  );
-                }),
-              ),
+              child: Observer(builder: (_) {
+                return ListView.builder(
+                  itemCount: !store.isFiltrar
+                      ? store.produtos.length
+                      : store.produtosFitrados.length,
+                  itemBuilder: ((context, index) {
+                    return ContainerProdutos(
+                      produtoGeral: store.isFiltrar
+                          ? store.produtosFitrados[index]
+                          : store.produtos[index],
+                    );
+                  }),
+                );
+              }),
             );
           }
           return CircularProgressIndicator(
@@ -206,11 +190,5 @@ class _HomeScreenState extends State<HomeScreen> {
         })
       ]),
     );
-  }
-
-  void dropdownCallback(String? value) {
-    if (value is String) {
-      hint = value;
-    }
   }
 }

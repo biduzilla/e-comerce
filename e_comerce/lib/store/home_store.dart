@@ -23,12 +23,38 @@ abstract class HomeStoreBase with Store {
 
   ObservableList<ProdutoGeral> produtos = ObservableList();
 
+  ObservableList<ProdutoGeral> produtosCarrinho = ObservableList();
+
   ObservableList<ProdutoGeral> produtosFitrados = ObservableList();
 
   ObservableList<String> categorias = ObservableList();
 
   @action
+  void addOrRemoveCarrinho(ProdutoGeral produto) {
+    if (produto.isAdd) {
+      produtosCarrinho.add(produto);
+    } else {
+      produtosCarrinho.remove(produto);
+    }
+
+    if (isFiltrar) {
+      produtosFitrados.forEach((element) {
+        if (element.id == produto.id) {
+          element.isAdd = !element.isAdd;
+        }
+      });
+    } else {
+      produtos.forEach((element) {
+        if (element.id == produto.id) {
+          element.isAdd = !element.isAdd;
+        }
+      });
+    }
+  }
+
+  @action
   void setCategoria(String value) {
+    listaCarregada = false;
     produtosFitrados.clear();
     categoria = value;
     produtos.forEach((produto) {
@@ -36,12 +62,15 @@ abstract class HomeStoreBase with Store {
         produtosFitrados.add(produto);
       }
     });
+    recarregarList();
   }
 
   @action
   void setInputPesquisa(String value) {
+    listaCarregada = false;
+
     RegExp exp = new RegExp(
-      value,
+      "\\b" + value + "\\b",
       caseSensitive: false,
     );
 
@@ -52,6 +81,7 @@ abstract class HomeStoreBase with Store {
         produtosFitrados.add(produto);
       }
     });
+    recarregarList();
   }
 
   @action
@@ -78,7 +108,6 @@ abstract class HomeStoreBase with Store {
 
     lst = lst.toSet().toList();
     categorias.addAll(lst);
-    print(categorias);
   }
 
   @action
@@ -110,4 +139,10 @@ abstract class HomeStoreBase with Store {
 
   @computed
   bool get isFiltrar => inputPesquisa != "" || categoria != "";
+
+  @action
+  Future<void> recarregarList() async {
+    await Future.delayed(Duration(milliseconds: 300));
+    listaCarregada = true;
+  }
 }
