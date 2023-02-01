@@ -152,6 +152,9 @@ abstract class HomeStoreBase with Store {
   @computed
   bool get isFiltrar => inputPesquisa != "" || categoria != "";
 
+  @computed
+  bool get isCarrinhoVazio => produtosCarrinho.length == 0;
+
   @action
   Future<void> recarregarList() async {
     await Future.delayed(Duration(milliseconds: 300));

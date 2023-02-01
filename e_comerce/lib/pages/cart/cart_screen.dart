@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -13,13 +14,12 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  HomeStore store = new HomeStore();
+  late HomeStore store;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(store.produtosCarrinho.length);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    store = Provider.of<HomeStore>(context);
   }
 
   @override
@@ -53,15 +53,19 @@ class _CartScreenState extends State<CartScreen> {
         children: [
           Expanded(
             child: Observer(builder: (_) {
-              return ListView.builder(
-                itemCount: store.produtosCarrinho.length,
-                itemBuilder: ((context, index) {
-                  return ContainerProdutos(
-                    produtoGeral: store.produtosCarrinho[index],
-                    addOrRemove: (ProdutoGeral) {},
-                  );
-                }),
-              );
+              if (!store.isCarrinhoVazio) {
+                return ListView.builder(
+                  itemCount: store.produtosCarrinho.length,
+                  itemBuilder: ((context, index) {
+                    return ContainerProdutos(
+                      produtoGeral: store.produtosCarrinho[index],
+                      addOrRemove: (ProdutoGeral) {},
+                    );
+                  }),
+                );
+              } else {
+                return Column();
+              }
             }),
           ),
           Padding(
