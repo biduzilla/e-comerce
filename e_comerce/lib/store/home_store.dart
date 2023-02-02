@@ -27,6 +27,15 @@ abstract class HomeStoreBase with Store {
   @observable
   num somaProdutos = 0.0;
 
+  @observable
+  String nome = "";
+
+  @observable
+  String telefone = "";
+
+  @observable
+  String cidade = "";
+
   ObservableList<ProdutoGeral> produtos = ObservableList();
 
   ObservableList<ProdutoGeral> produtosCarrinho = ObservableList();
@@ -35,7 +44,14 @@ abstract class HomeStoreBase with Store {
 
   ObservableList<String> categorias = ObservableList();
 
-  num get value => somaProdutos;
+  @action
+  void setNome(String value) => nome = value;
+
+  @action
+  void setCidade(String value) => nome = value;
+
+  @action
+  void setTelefone(String value) => nome = value;
 
   @action
   void addOrRemoveCarrinho(ProdutoGeral produto) {
