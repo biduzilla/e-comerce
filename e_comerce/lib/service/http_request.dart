@@ -45,7 +45,7 @@ class HttpRequest {
   }
 
   static Future<bool> cadastrarUser(UserRequest user) async {
-    var url = Uri.parse('localhost:80/user/');
+    var url = Uri.parse('http://localhost:3000/user');
 
     Map data = {
       "nome": user.nome,

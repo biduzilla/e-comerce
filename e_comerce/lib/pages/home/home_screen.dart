@@ -139,11 +139,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             onPressed: () {
                               if (store.isFormValid) {
-                                HttpRequest.get();
-                                // store.login();
-                                // Navigator.of(context).pushReplacement(
-                                //     MaterialPageRoute(
-                                //         builder: (_) => HomeScreen()));
+                                store.login();
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (_) => HomeScreen()));
                               } else {
                                 avisoAlert();
                               }
