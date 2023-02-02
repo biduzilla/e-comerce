@@ -3,14 +3,15 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class CustomInput extends StatelessWidget {
-  const CustomInput(
-      {super.key,
-      this.controller,
-      required this.hint,
-      this.onChange,
-      this.prefix,
-      this.suffix,
-      this.enabled});
+  CustomInput({
+    super.key,
+    this.controller,
+    required this.hint,
+    this.onChange,
+    this.prefix,
+    this.suffix,
+    this.enabled,
+  });
 
   final TextEditingController? controller;
 
@@ -21,6 +22,7 @@ class CustomInput extends StatelessWidget {
   final bool? enabled;
   final Function(String)? onChange;
 
+  String? erroText;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,6 +45,7 @@ class CustomInput extends StatelessWidget {
             onChanged: onChange,
             enabled: enabled,
             decoration: InputDecoration(
+              errorText: erroText,
               hintText: hint,
               hintStyle: TextStyle(fontWeight: FontWeight.bold),
               border: InputBorder.none,

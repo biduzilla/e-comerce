@@ -1,6 +1,8 @@
 import 'package:e_comerce/models/produto_1.dart';
 import 'package:e_comerce/models/produto_2.dart';
 import 'package:e_comerce/models/produto_geral.dart';
+import 'package:e_comerce/models/user_request.dart';
+import 'package:e_comerce/service/http_request.dart';
 import 'package:mobx/mobx.dart';
 part 'home_store.g.dart';
 
@@ -36,6 +38,9 @@ abstract class HomeStoreBase with Store {
   @observable
   String cidade = "";
 
+  @observable
+  String errorText = "";
+
   ObservableList<ProdutoGeral> produtos = ObservableList();
 
   ObservableList<ProdutoGeral> produtosCarrinho = ObservableList();
@@ -44,14 +49,27 @@ abstract class HomeStoreBase with Store {
 
   ObservableList<String> categorias = ObservableList();
 
+  void login() async {
+    UserRequest user = UserRequest();
+    user.nome = nome;
+    user.telefone = int.parse(telefone);
+    user.cidade = cidade;
+
+    await HttpRequest.cadastrarUser(user);
+    isLogged = true;
+  }
+
+  @action
+  void setLogged() => isLogged = true;
+
   @action
   void setNome(String value) => nome = value;
 
   @action
-  void setCidade(String value) => nome = value;
+  void setCidade(String value) => cidade = value;
 
   @action
-  void setTelefone(String value) => nome = value;
+  void setTelefone(String value) => telefone = value;
 
   @action
   void addOrRemoveCarrinho(ProdutoGeral produto) {
@@ -167,7 +185,13 @@ abstract class HomeStoreBase with Store {
   bool get isFiltrar => inputPesquisa != "" || categoria != "";
 
   @computed
+  bool get isTelefoneValid => RegExp(r'^[0-9]+$').hasMatch(telefone);
+
+  @computed
   bool get isCarrinhoVazio => produtosCarrinho.length == 0;
+
+  @computed
+  bool get isFormValid => isTelefoneValid && nome != "" && cidade != "";
 
   @action
   Future<void> recarregarList() async {

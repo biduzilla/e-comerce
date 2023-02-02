@@ -1,5 +1,6 @@
 import 'package:e_comerce/models/produto_1.dart';
 import 'package:e_comerce/models/produto_2.dart';
+import 'package:e_comerce/models/user_request.dart';
 import 'package:e_comerce/pages/cart/cart_screen.dart';
 import 'package:e_comerce/pages/home/widgets/container_produtos.dart';
 import 'package:e_comerce/service/http_request.dart';
@@ -123,31 +124,91 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       width: double.infinity,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            Color(0xffEF233C),
-                          ),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              // Change your radius here
-                              borderRadius: BorderRadius.circular(5),
+                      child: Observer(
+                        builder: ((context) {
+                          return ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Color(0xffEF233C)),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  // Change your radius here
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Padding(
-                            padding: EdgeInsets.all(
-                                MediaQuery.of(context).size.height / 80),
-                            child: Text(
-                              "Criar Conta",
-                              style: TextStyle(
-                                  fontSize: 26, color: Color(0xffEDF2F4)),
-                            )),
+                            onPressed: () {
+                              if (store.isFormValid) {
+                                store.login();
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (_) => HomeScreen()));
+                              } else {
+                                avisoAlert();
+                              }
+                            },
+                            child: Padding(
+                                padding: EdgeInsets.all(
+                                    MediaQuery.of(context).size.height / 80),
+                                child: Text(
+                                  "Criar Conta",
+                                  style: TextStyle(
+                                      fontSize: 26, color: Color(0xffEDF2F4)),
+                                )),
+                          );
+                        }),
                       )),
                 )
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future avisoAlert() {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xffEF233C),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+          title: const Text("Aviso!",
+              style: TextStyle(fontSize: 28, color: Color(0xffEF233C))),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(6.0))),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 30),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Telefone Inválido ou Dados Inválidos",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff2B2D42),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

@@ -1,5 +1,7 @@
 import 'package:e_comerce/models/produto_1.dart';
 import 'package:e_comerce/models/produto_2.dart';
+import 'package:e_comerce/models/user_request.dart';
+import 'package:e_comerce/models/user_response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -39,5 +41,56 @@ class HttpRequest {
         (json.decode(source) as List).map((i) => Produto2.fromJson(i)).toList();
     // print(source);
     return produtos;
+  }
+
+  static Future<bool> cadastrarUser(UserRequest user) async {
+    var url = Uri.parse('localhost:3000/user/');
+
+    Map data = {
+      "nome": user.nome,
+      "telefone": user.telefone,
+      "cidade": user.cidade,
+    };
+
+    var body = json.encode(data);
+
+    var response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          'Accept': '*/*'
+        },
+        body: body);
+    print(response.body);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<UserResponse> finalizarCompra(UserRequest user) async {
+    var url = Uri.parse('localhost:3000/user/');
+    Map data = {
+      "nome": user.nome,
+      "telefone": user.telefone,
+      "cidade": user.cidade,
+      "produtos": user.produtos,
+    };
+
+    var body = json.encode(data);
+
+    var response = await http.put(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          'Accept': '*/*'
+        },
+        body: body);
+
+    String source = Utf8Decoder().convert(response.bodyBytes);
+    UserResponse userResponse = UserResponse.fromJson(jsonDecode(source));
+    print(source);
+    return userResponse;
   }
 }
