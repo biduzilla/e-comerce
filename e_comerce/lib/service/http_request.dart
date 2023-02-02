@@ -19,6 +19,7 @@ class HttpRequest {
     );
 
     String source = Utf8Decoder().convert(response.bodyBytes);
+
     List<Produto1> produtos =
         (json.decode(source) as List).map((e) => Produto1.fromJson(e)).toList();
     return produtos;
@@ -44,7 +45,7 @@ class HttpRequest {
   }
 
   static Future<bool> cadastrarUser(UserRequest user) async {
-    var url = Uri.parse('localhost:3000/user/');
+    var url = Uri.parse('localhost:80/user/');
 
     Map data = {
       "nome": user.nome,
@@ -70,7 +71,7 @@ class HttpRequest {
   }
 
   static Future<UserResponse> finalizarCompra(UserRequest user) async {
-    var url = Uri.parse('localhost:3000/user/');
+    var url = Uri.parse("http://localhost:3000/user");
     Map data = {
       "nome": user.nome,
       "telefone": user.telefone,
@@ -92,5 +93,21 @@ class HttpRequest {
     UserResponse userResponse = UserResponse.fromJson(jsonDecode(source));
     print(source);
     return userResponse;
+  }
+
+  static Future<void> get() async {
+    var url = Uri.parse('http://localhost:3000/user');
+    var response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        'Accept': '*/*'
+      },
+    );
+
+    String source = Utf8Decoder().convert(response.bodyBytes);
+
+    print(source);
   }
 }
