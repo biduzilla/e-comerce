@@ -1,3 +1,4 @@
+import 'package:e_comerce/pages/cart/widget/item_carrinho.dart';
 import 'package:e_comerce/pages/home/widgets/container_produtos.dart';
 import 'package:e_comerce/store/home_store.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          iconTheme:
-              IconThemeData(color: Color(0xffEDF2F4) //change your color here
-                  ),
+          iconTheme: IconThemeData(color: Color(0xffEDF2F4)),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -57,9 +56,10 @@ class _CartScreenState extends State<CartScreen> {
                 return ListView.builder(
                   itemCount: store.produtosCarrinho.length,
                   itemBuilder: ((context, index) {
-                    return ContainerProdutos(
+                    return ItemCarrinho(
                       produtoGeral: store.produtosCarrinho[index],
-                      addOrRemove: (ProdutoGeral) {},
+                      addOrRemove: store.addOrRemoveCarrinho,
+                      reloadProdutos: store.recarregarList,
                     );
                   }),
                 );

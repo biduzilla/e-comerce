@@ -1,30 +1,19 @@
 import 'package:e_comerce/models/produto_geral.dart';
-import 'package:e_comerce/store/home_store.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter/material.dart';
 
-class ContainerProdutos extends StatefulWidget {
-  const ContainerProdutos({
+class ItemCarrinho extends StatelessWidget {
+  const ItemCarrinho({
     super.key,
-    required this.produtoGeral,
     required this.addOrRemove,
+    required this.produtoGeral,
+    required this.reloadProdutos,
   });
 
   final Function(ProdutoGeral) addOrRemove;
+  final Function reloadProdutos;
   final ProdutoGeral produtoGeral;
-  @override
-  State<ContainerProdutos> createState() =>
-      _ContainerProdutosState(produtoGeral, addOrRemove);
-}
-
-class _ContainerProdutosState extends State<ContainerProdutos> {
-  final ProdutoGeral produtoGeral;
-
-  _ContainerProdutosState(this.produtoGeral, this.addOrRemove);
-
-  final Function(ProdutoGeral) addOrRemove;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,8 +22,7 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
         height: 200,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: !produtoGeral.isAdd ? Color(0xffEF233C) : Color(0xffEDF2F4),
-            borderRadius: BorderRadius.circular(10)),
+            color: Color(0xffEF233C), borderRadius: BorderRadius.circular(10)),
         child: Row(
           children: [
             ClipRRect(
@@ -58,9 +46,7 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
                   Text(
                     produtoGeral.nome!,
                     style: TextStyle(
-                        color: !produtoGeral.isAdd
-                            ? Color(0xffEDF2F4)
-                            : Color(0xffEF233C),
+                        color: Color(0xffEDF2F4),
                         fontWeight: FontWeight.bold,
                         fontSize: 26),
                   ),
@@ -69,22 +55,14 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
                   ),
                   Text(
                     produtoGeral.descricao!,
-                    style: TextStyle(
-                        color: !produtoGeral.isAdd
-                            ? Color(0xffEDF2F4)
-                            : Color(0xffEF233C),
-                        fontSize: 16),
+                    style: TextStyle(color: Color(0xffEDF2F4), fontSize: 16),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 60,
                   ),
                   Text(
                     produtoGeral.categoria!,
-                    style: TextStyle(
-                        color: !produtoGeral.isAdd
-                            ? Colors.amber
-                            : Color(0xff2B2D42),
-                        fontSize: 14),
+                    style: TextStyle(color: Colors.amber, fontSize: 14),
                   ),
                 ],
               ),
@@ -97,9 +75,7 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
                 Text(
                   "Preço \$${produtoGeral.preco}",
                   style: TextStyle(
-                      color: !produtoGeral.isAdd
-                          ? Color(0xffEDF2F4)
-                          : Color(0xffEF233C),
+                      color: Color(0xffEDF2F4),
                       fontSize: 24,
                       fontWeight: FontWeight.bold),
                 ),
@@ -117,22 +93,16 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
                       ),
                     ),
                     onPressed: () {
-                      setState(() {
-                        produtoGeral.isAdd = !produtoGeral.isAdd;
-                      });
+                      produtoGeral.isAdd = false;
                       addOrRemove(produtoGeral);
-                      // store.addOrRemoveCarrinho(produtoGeral);
+                      reloadProdutos();
                     },
-                    icon: !produtoGeral.isAdd
-                        ? Icon(Icons.add_shopping_cart)
-                        : Icon(Icons.remove_shopping_cart),
+                    icon: Icon(Icons.remove_shopping_cart),
                     label: Padding(
                         padding: EdgeInsets.all(
                             MediaQuery.of(context).size.height / 80),
                         child: Text(
-                          !produtoGeral.isAdd
-                              ? "Adicionar ao Carrinho"
-                              : "Remover do Carrinho",
+                          "Remover Produto",
                           style:
                               TextStyle(fontSize: 26, color: Color(0xffEDF2F4)),
                         )),
