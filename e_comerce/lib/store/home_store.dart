@@ -24,6 +24,9 @@ abstract class HomeStoreBase with Store {
   @observable
   bool listaCarregada = false;
 
+  @observable
+  num somaProdutos = 0.0;
+
   ObservableList<ProdutoGeral> produtos = ObservableList();
 
   ObservableList<ProdutoGeral> produtosCarrinho = ObservableList();
@@ -32,32 +35,31 @@ abstract class HomeStoreBase with Store {
 
   ObservableList<String> categorias = ObservableList();
 
+  num get value => somaProdutos;
+
   @action
   void addOrRemoveCarrinho(ProdutoGeral produto) {
     if (produto.isAdd) {
       produtosCarrinho.add(produto);
+      somaProdutos += num.parse(produto.preco!);
     } else {
       produtosCarrinho.remove(produto);
+      somaProdutos -= num.parse(produto.preco!);
     }
 
     if (isFiltrar) {
       produtosFitrados.forEach((element) {
         if (element.id == produto.id) {
           element.isAdd = produto.isAdd;
-          print("id produto ${produto.isAdd}");
-          print("id produtolst ${element.isAdd}");
         }
       });
     } else {
       produtos.forEach((element) {
         if (element.id == produto.id) {
           element.isAdd = produto.isAdd;
-          print("id produto ${produto.isAdd}");
-          print("id produtolst ${element.isAdd}");
         }
       });
     }
-    print(produtosCarrinho.length);
   }
 
   @action
