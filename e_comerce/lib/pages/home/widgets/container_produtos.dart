@@ -122,7 +122,6 @@ class _ContainerProdutosState extends State<ContainerProdutos> {
                         produtoGeral.isAdd = !produtoGeral.isAdd;
                       });
                       addOrRemove(produtoGeral);
-                      // store.addOrRemoveCarrinho(produtoGeral);
                     },
                     icon: !produtoGeral.isAdd
                         ? Icon(Icons.add_shopping_cart)
