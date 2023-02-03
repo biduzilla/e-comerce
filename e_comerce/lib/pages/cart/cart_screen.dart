@@ -118,7 +118,7 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                         onPressed: () {
                           store.fecharVenda();
-                          repostaJson();
+                          msgFinal();
                         },
                         child: Padding(
                             padding: EdgeInsets.all(
@@ -138,12 +138,46 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Future repostaJson() {
+  Future msgFinal() {
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          title: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Color(0xffEF233C),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
+            child: Padding(
+              padding: EdgeInsets.all(MediaQuery.of(context).size.height / 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Resposta Json",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xffEDF2F4),
+                    ),
+                  ),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.clear_outlined,
+                        size: 30,
+                        color: Color(0xffEDF2F4),
+                      ))
+                ],
+              ),
+            ),
+          ),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(6.0))),
           content: Container(
@@ -152,46 +186,11 @@ class _CartScreenState extends State<CartScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Color(0xffEF233C),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10))),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.all(MediaQuery.of(context).size.height / 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Resposta Json",
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xffEDF2F4),
-                          ),
-                        ),
-                        Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(
-                              Icons.clear_outlined,
-                              size: 30,
-                              color: Color(0xffEDF2F4),
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 60,
                 ),
                 Text(
-                  store.reponseJson,
+                  "Compra Realizada Com Sucesso",
                   style: TextStyle(color: Color(0xff2B2D42), fontSize: 22),
                 ),
               ],

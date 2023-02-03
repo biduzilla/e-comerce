@@ -65,9 +65,9 @@ abstract class HomeStoreBase with Store {
 
   void fecharVenda() async {
     UserRequest user = UserRequest();
-    // user.nome = nome;
-    // user.telefone = int.parse(telefone);
-    // user.cidade = cidade;
+    user.nome = nome;
+    user.telefone = int.parse(telefone);
+    user.cidade = cidade;
     List<ProdutosR> produtosLst = [];
     produtosCarrinho.forEach((prod) {
       ProdutosR produtos = ProdutosR();

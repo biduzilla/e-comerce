@@ -14,6 +14,7 @@ class ContainerProdutos extends StatefulWidget {
 
   final Function(ProdutoGeral) addOrRemove;
   final ProdutoGeral produtoGeral;
+
   @override
   State<ContainerProdutos> createState() =>
       _ContainerProdutosState(produtoGeral, addOrRemove);

@@ -409,8 +409,12 @@ class _HomeScreenState extends State<HomeScreen> {
               }),
             );
           }
-          return CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(Color(0xffEDF2F4)),
+          return Column(
+            children: [
+              CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Color(0xffEDF2F4)),
+              ),
+            ],
           );
         })
       ]),

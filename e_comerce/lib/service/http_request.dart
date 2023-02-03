@@ -78,9 +78,6 @@ class HttpRequest {
     };
 
     var body = json.encode(data);
-
-    print(body);
-
     var response = await http.put(url,
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +88,6 @@ class HttpRequest {
 
     String source = Utf8Decoder().convert(response.bodyBytes);
     UserResponse userResponse = UserResponse.fromJson(jsonDecode(source));
-    print(source);
     return source;
   }
 
