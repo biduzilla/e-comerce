@@ -2,6 +2,7 @@ import 'package:e_comerce/models/produto_1.dart';
 import 'package:e_comerce/models/produto_2.dart';
 import 'package:e_comerce/models/produto_geral.dart';
 import 'package:e_comerce/models/user_request.dart';
+import 'package:e_comerce/models/user_response.dart';
 import 'package:e_comerce/service/http_request.dart';
 import 'package:mobx/mobx.dart';
 part 'home_store.g.dart';
@@ -39,7 +40,10 @@ abstract class HomeStoreBase with Store {
   String cidade = "";
 
   @observable
-  String errorText = "";
+  UserResponse userResponse = UserResponse();
+
+  @observable
+  String reponseJson = "";
 
   ObservableList<ProdutoGeral> produtos = ObservableList();
 
@@ -55,8 +59,29 @@ abstract class HomeStoreBase with Store {
     user.telefone = int.parse(telefone);
     user.cidade = cidade;
 
-    await HttpRequest.cadastrarUser(user);
+    userResponse = await HttpRequest.cadastrarUser(user);
     isLogged = true;
+  }
+
+  void fecharVenda() async {
+    UserRequest user = UserRequest();
+    // user.nome = nome;
+    // user.telefone = int.parse(telefone);
+    // user.cidade = cidade;
+    List<ProdutosR> produtosLst = [];
+    produtosCarrinho.forEach((prod) {
+      ProdutosR produtos = ProdutosR();
+      produtos.nome = prod.nome;
+      produtos.descricao = prod.descricao;
+      produtos.preco = prod.preco;
+      produtos.imagem = prod.imagem;
+      produtosLst.add(produtos);
+    });
+    user.produtos = produtosLst;
+
+    String reponseJson =
+        await HttpRequest.finalizarCompra(user, userResponse.sId!);
+    print(reponseJson);
   }
 
   @action

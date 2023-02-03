@@ -2,7 +2,7 @@ class UserRequest {
   String? nome;
   int? telefone;
   String? cidade;
-  List<Produtos>? produtos;
+  List<ProdutosR>? produtos = [];
 
   UserRequest({this.nome, this.telefone, this.cidade, this.produtos});
 
@@ -11,9 +11,9 @@ class UserRequest {
     telefone = json['telefone'];
     cidade = json['cidade'];
     if (json['produtos'] != null) {
-      produtos = <Produtos>[];
+      produtos = <ProdutosR>[];
       json['produtos'].forEach((v) {
-        produtos!.add(new Produtos.fromJson(v));
+        produtos!.add(new ProdutosR.fromJson(v));
       });
     }
   }
@@ -30,15 +30,15 @@ class UserRequest {
   }
 }
 
-class Produtos {
+class ProdutosR {
   String? nome;
   String? descricao;
   String? imagem;
   String? preco;
 
-  Produtos({this.nome, this.descricao, this.imagem, this.preco});
+  ProdutosR({this.nome, this.descricao, this.imagem, this.preco});
 
-  Produtos.fromJson(Map<String, dynamic> json) {
+  ProdutosR.fromJson(Map<String, dynamic> json) {
     nome = json['nome'];
     descricao = json['descricao'];
     imagem = json['imagem'];

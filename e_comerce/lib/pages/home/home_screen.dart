@@ -46,6 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
     store.popularProdutos();
   }
 
+  bool isLogged = false;
+
   Future alertDialog() {
     return showDialog(
       context: context,
@@ -140,9 +142,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               if (store.isFormValid) {
                                 store.login();
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (_) => HomeScreen()));
+                                setState(() {
+                                  isLogged = true;
+                                });
+                                Navigator.pop(context);
+                                // store.recarregarList();
+                                // Navigator.of(context).pushReplacement(
+                                //     MaterialPageRoute(
+                                //         builder: (_) => HomeScreen()));
                               } else {
                                 avisoAlert();
                               }
@@ -239,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Spacer(),
             Observer(builder: (_) {
-              if (!store.isLogged) {
+              if (!isLogged) {
                 return TextButton.icon(
                     onPressed: () {
                       alertDialog();

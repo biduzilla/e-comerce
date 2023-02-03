@@ -44,7 +44,7 @@ class HttpRequest {
     return produtos;
   }
 
-  static Future<bool> cadastrarUser(UserRequest user) async {
+  static Future<UserResponse> cadastrarUser(UserRequest user) async {
     var url = Uri.parse('http://localhost:3000/user');
 
     Map data = {
@@ -63,15 +63,13 @@ class HttpRequest {
         },
         body: body);
     print(response.body);
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      return false;
-    }
+    String source = Utf8Decoder().convert(response.bodyBytes);
+    UserResponse userResponse = UserResponse.fromJson(jsonDecode(source));
+    return userResponse;
   }
 
-  static Future<UserResponse> finalizarCompra(UserRequest user) async {
-    var url = Uri.parse("http://localhost:3000/user");
+  static Future<String> finalizarCompra(UserRequest user, String id) async {
+    var url = Uri.parse("http://localhost:3000/user/${id}");
     Map data = {
       "nome": user.nome,
       "telefone": user.telefone,
@@ -80,6 +78,8 @@ class HttpRequest {
     };
 
     var body = json.encode(data);
+
+    print(body);
 
     var response = await http.put(url,
         headers: {
@@ -92,7 +92,7 @@ class HttpRequest {
     String source = Utf8Decoder().convert(response.bodyBytes);
     UserResponse userResponse = UserResponse.fromJson(jsonDecode(source));
     print(source);
-    return userResponse;
+    return source;
   }
 
   static Future<void> get() async {

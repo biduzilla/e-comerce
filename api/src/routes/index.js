@@ -1,5 +1,6 @@
 import express from "express";
 import users from "./userRoutes.js"
+import cors from "cors";
 
 const routes = (app) => {
     app.route('/').get((req,res)=>{
@@ -8,7 +9,10 @@ const routes = (app) => {
         })
     })
 
-    app.use(express.json(), users)
+    app.use(cors({
+        origin: '*',
+        methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+    }),express.json(), users)
 }
 
 export default routes;
