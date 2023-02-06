@@ -1,7 +1,5 @@
 # Projeto E-comerce
 
-IMG
-
 # Sobre o Projeto
 O projeto e-comerce consiste na simualação de um site de vendas de produtos, onde consume duas apis para obter os dados dos produtos para listar em um app web, onde é possível colocar os os produtos escolhidos em um carrinho de compras e salvar os produtos escolhidos em uma api própria junto com os dados do cliente.
 
@@ -13,7 +11,8 @@ Para ser mais intuitivo a lista de produtos e a escolha deles, ao selecionar o p
 Com a página principal funcionando e já listando os produtos e realizando a filtragem deles, chegou a vez da criação da da tela do carrinho, onde utiliza a mesma lógica para de listagem dos produtos da tela inicial, onde foi feita pequenas alterações no modelo visivel de cada produto e com opção de retirar o produto do seu carrinho. Para finalizar o projeto foi feita a integração com a api criada com node para salvar os dados. Para o usuário poder acessar sua tela de carrinho é necessário salvar seus dados pessoais para realização do login e liberar a opção de acessar a tela de carrinho. Após realizar o login e adicionar os produtos nos carrinhos e possível finalizar suas compras na tela do carrinho, onde ocorre a atualização do banco de dados.
 
 # Layout Web
-IMG
+![Web 1](https://github.com/biduzilla/e-comerce/blob/main/assets/home.png)
+![Web 2](https://github.com/biduzilla/e-comerce/blob/main/assets/carrinho.png)
 
 # Teconologias utilizadas
 
@@ -43,8 +42,9 @@ npm install
 # executar a api e esperar a mensagem no console sinalizando a conexão com o banco de dados
 npm run dev
 ```
+![API 1](https://github.com/biduzilla/e-comerce/blob/main/assets/dbConnect.png)
+![API 2](https://github.com/biduzilla/e-comerce/blob/main/assets/initApi.png)
 
-IMG
 
 ## Front end
 ```bash
@@ -63,7 +63,8 @@ flutter run -d chrome --web-renderer html
 
 # Autor
 Luiz Henrique de Carvalho Teles
-linkedin.com/in/luiz-henrique-de-carvalho-teles-a5b51b1a7/
+
+https://www.linkedin.com/in/luiz-henrique-de-carvalho-teles-a5b51b1a7/
 
 
 
