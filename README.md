@@ -1,7 +1,7 @@
 # Projeto E-comerce
 
 # Sobre o Projeto
-O projeto e-comerce consiste na simualação de um site de vendas de produtos, onde consume duas apis para obter os dados dos produtos para listar em um app web, onde é possível colocar os os produtos escolhidos em um carrinho de compras e salvar os produtos escolhidos em uma api própria junto com os dados do cliente.
+O projeto e-comerce consiste na simualação de um site de vendas de produtos, onde consume duas apis para obter os dados dos produtos para listar em um app web, onde é possível colocar os produtos escolhidos em um carrinho de compras e salvar os produtos escolhidos em uma api própria junto com os dados do cliente.
 
 
 # Processo de Criação
